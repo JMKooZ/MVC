@@ -8,7 +8,7 @@ public class Controller {
     LoginService loginService;
     InsertService insertService;
     CustomerDao customerDao;
-    depositService depositService;
+    depositService depositService; //테스트
     withdrawMoney withdrawMoney;
 
     public Controller(LoginService loginService, InsertService insertService, CustomerDao customerDao, depositService depositService, withdrawMoney withdrawMoney) {
