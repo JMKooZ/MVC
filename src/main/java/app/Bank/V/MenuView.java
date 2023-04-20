@@ -32,9 +32,6 @@ public class MenuView {
                     System.out.print("출금액> ");
                     money = Integer.parseInt(sc.readLine());
                     controller.withdrawMoney(id, money);
-//                    if (this.controller.withdrawMoney(id, money).equals("success")) {
-//                        System.out.println("출금성공 출금금액: " + money);
-//                    }
                     break;
                 case 3:
                     System.out.print("잔고> ");
@@ -54,9 +51,9 @@ public class MenuView {
                     System.out.print("바꿀 비밀번호를 입력해주세요> ");
                     String newPw = sc.readLine();
                     if(controller.change(id,pw,newPw).equals("fail")){
-                        return;
-                    }else{
                         break;
+                    }else{
+                        return;
                     }
                 case 7:
                     System.out.println("로그아웃완료");
