@@ -2,6 +2,7 @@ package main.java.app.Bank.C;
 
 import main.java.app.Bank.M.CustomerDao;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
 
 public class Controller {
     public static AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Context.class);
@@ -30,8 +31,12 @@ public class Controller {
     public String login(String id, String pw) {
         LoginService loginService = (LoginService)context.getBean("loginService", LoginService.class);
         try {
-            loginService.login(id, pw);
-            return "success";
+            if(loginService.login_service(id, pw).equals("s")) {
+                loginService.login_service(id, pw);
+                return "success";
+            }else{
+                return "f";
+            }
         } catch (Exception e) {
             System.out.println("회원정보가 일치하지않습니다.");
             return "fail";
@@ -92,6 +97,7 @@ public class Controller {
         }else {
             changeService.change(id, newPw);
             System.out.println("변경완료했습니다.");
+            System.out.println("다시 로그인 해주세요.");
             return "success";
         }
     }

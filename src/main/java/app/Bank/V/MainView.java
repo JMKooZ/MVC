@@ -29,6 +29,7 @@ public class MainView {
                         new MenuView(this.id);
                     } else {
                         System.out.println("로그인 실패");
+                        break;
                     }
                     break;
                 case 2:
