@@ -4,7 +4,7 @@ import main.java.app.Bank.M.CustomerDao;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Controller {
-    public static AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(new Class[]{Context.class});
+    public static AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Context.class);
     LoginService loginService;
     InsertService insertService;
     CustomerDao customerDao;
