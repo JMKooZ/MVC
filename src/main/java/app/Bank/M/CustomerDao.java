@@ -16,4 +16,7 @@ public class CustomerDao {
     public Customer selectCustomer(String id) {
         return (Customer)this.map.get(id);
     }
+    public void deleteCustomer(String id){
+        map.remove(id);
+    }
 }

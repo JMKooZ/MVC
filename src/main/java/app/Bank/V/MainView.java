@@ -22,13 +22,9 @@ public class MainView {
             String pw;
             switch (num) {
                 case 1:
-                    System.out.print("아이디 입력> ");
-                    this.id = sc.readLine();
-                    System.out.print("비밀번호 입력> ");
-                    pw = sc.readLine();
+                    System.out.print("아이디 입력> "); this.id = sc.readLine();
+                    System.out.print("비밀번호 입력> "); pw = sc.readLine();
                     if (this.controller.login(this.id, pw).equals("success")) {
-                        System.out.println("서섹스");
-                        this.a = false;
                         System.out.println(this.id + "님 환영띠");
                         new MenuView(this.id);
                     } else {
@@ -36,14 +32,10 @@ public class MainView {
                     }
                     break;
                 case 2:
-                    System.out.print("아이디 입력> ");
-                    this.id = sc.readLine();
-                    System.out.print("비밀번호 입력> ");
-                    pw = sc.readLine();
-                    System.out.print("이름 입력> ");
-                    String name = sc.readLine();
-                    System.out.print("생년월일 입력> ");
-                    int birth = Integer.parseInt(sc.readLine());
+                    System.out.print("아이디 입력> ");this.id = sc.readLine();
+                    System.out.print("비밀번호 입력> ");pw = sc.readLine();
+                    System.out.print("이름 입력> ");String name = sc.readLine();
+                    System.out.print("생년월일 입력> ");int birth = Integer.parseInt(sc.readLine());
                     if (this.controller.insert(this.id, pw, name, birth).equals("success")) {
                         System.out.println("success");
                     } else {
@@ -58,7 +50,6 @@ public class MainView {
                     System.out.println("메뉴 확인");
             }
         }
-
     }
 
     public static void main(String[] args) throws Exception {

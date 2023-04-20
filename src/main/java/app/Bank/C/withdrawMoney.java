@@ -10,8 +10,13 @@ public class withdrawMoney {
         this.customerDao = customerDao;
     }
 
-    public void withdrawMoney(String id, int money) {
+    public String withdrawMoney(String id, int money) {
         Customer customer = this.customerDao.selectCustomer(id);
-        customer.withdrawMoney(money);
+        if(customerDao.selectCustomer(id).getMoney() < money){
+            return "fail";
+        }else{
+            customer.withdrawMoney(money);
+            return "success";
+        }
     }
 }
