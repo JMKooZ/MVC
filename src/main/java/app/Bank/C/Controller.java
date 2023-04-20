@@ -12,9 +12,11 @@ public class Controller {
     withdrawMoney withdrawMoney;
     infoService infoService;
     deleteService deleteService;
+    changeService changeService;
 
     public Controller(LoginService loginService, InsertService insertService, CustomerDao customerDao,
-                      depositService depositService, withdrawMoney withdrawMoney,infoService infoService, deleteService deleteService) {
+                      depositService depositService, withdrawMoney withdrawMoney,infoService infoService, deleteService deleteService,
+                      changeService changeService) {
         this.loginService = loginService;
         this.insertService = insertService;
         this.customerDao = customerDao;
@@ -22,6 +24,7 @@ public class Controller {
         this.withdrawMoney = withdrawMoney;
         this.infoService = infoService;
         this.deleteService = deleteService;
+        this.changeService = changeService;
     }
 
     public String login(String id, String pw) {
@@ -29,8 +32,8 @@ public class Controller {
         try {
             loginService.login(id, pw);
             return "success";
-        } catch (NullPointerException var5) {
-            System.out.println("아이디가 존재하지않습니다.");
+        } catch (Exception e) {
+            System.out.println("회원정보가 일치하지않습니다.");
             return "fail";
         }
     }
@@ -80,5 +83,16 @@ public class Controller {
     }
     public void delete(String id){
         customerDao.deleteCustomer(id);
+    }
+    public String change(String id, String pw ,String newPw){
+        changeService changeService = context.getBean("change",changeService.class);
+        if(!pw.equals(customerDao.selectCustomer(id).getPw())) {
+            System.out.println("비밀번호가 일치하지 않습니다.");
+            return "fail";
+        }else {
+            changeService.change(id, newPw);
+            System.out.println("변경완료했습니다.");
+            return "success";
+        }
     }
 }
