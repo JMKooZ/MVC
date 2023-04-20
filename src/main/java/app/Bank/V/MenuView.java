@@ -2,6 +2,7 @@ package main.java.app.Bank.V;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import main.java.app.Bank.C.Controller;
 
@@ -15,7 +16,7 @@ public class MenuView {
 
         while (run) {
             System.out.println("-----------");
-            System.out.println("1. 입금 | 2. 출금 | 3. 잔고 | 4. 회원정보 | 5. 회원탈퇴 | 6.로그아웃");
+            System.out.println("1. 입금 | 2. 출금 | 3. 잔고 | 4. 회원정보 | 5. 비밀번호 변경 | 6. 회원탈퇴 | 7.로그아웃");
             System.out.println("-----------");
             int num = Integer.parseInt(sc.readLine());
             int money;
@@ -42,12 +43,22 @@ public class MenuView {
                 case 4:
                     controller.information(id);
                     break;
-                case 5:
+                case 6:
                     controller.delete(id);
                     System.out.println("탈퇴 되었습니다.");
                     run = false;
                     break;
-                case 6:
+                case 5:
+                    System.out.print("현재 비밀번호를 입력해주세요> ");
+                    String pw = sc.readLine();
+                    System.out.print("바꿀 비밀번호를 입력해주세요> ");
+                    String newPw = sc.readLine();
+                    if(controller.change(id,pw,newPw).equals("fail")){
+                        return;
+                    }else{
+                        break;
+                    }
+                case 7:
                     System.out.println("로그아웃완료");
                     run = false;
                     break;
