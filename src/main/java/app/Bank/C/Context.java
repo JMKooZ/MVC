@@ -41,9 +41,13 @@ public class Context {
         return new deleteService(customerDao());
     }
     @Bean
+    public changeService change(){
+        return new changeService(customerDao());
+    }
+    @Bean
     public Controller controller() {
         return new Controller(this.loginService(), this.insertService(), this.customerDao(), this.depositService(), this.withdrawMoney(), infoService()
-        ,deleteService());
+        ,deleteService(), change());
     }
 }
 

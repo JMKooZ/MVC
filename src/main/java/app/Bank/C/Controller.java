@@ -2,6 +2,7 @@ package main.java.app.Bank.C;
 
 import main.java.app.Bank.M.CustomerDao;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
 
 public class Controller {
     public static AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Context.class);
@@ -12,9 +13,11 @@ public class Controller {
     withdrawMoney withdrawMoney;
     infoService infoService;
     deleteService deleteService;
+    changeService changeService;
 
     public Controller(LoginService loginService, InsertService insertService, CustomerDao customerDao,
-                      depositService depositService, withdrawMoney withdrawMoney,infoService infoService, deleteService deleteService) {
+                      depositService depositService, withdrawMoney withdrawMoney,infoService infoService, deleteService deleteService,
+                      changeService changeService) {
         this.loginService = loginService;
         this.insertService = insertService;
         this.customerDao = customerDao;
@@ -22,15 +25,20 @@ public class Controller {
         this.withdrawMoney = withdrawMoney;
         this.infoService = infoService;
         this.deleteService = deleteService;
+        this.changeService = changeService;
     }
 
     public String login(String id, String pw) {
         LoginService loginService = (LoginService)context.getBean("loginService", LoginService.class);
         try {
-            loginService.login(id, pw);
-            return "success";
-        } catch (NullPointerException var5) {
-            System.out.println("아이디가 존재하지않습니다.");
+            if(loginService.login_service(id, pw).equals("s")) {
+                loginService.login_service(id, pw);
+                return "success";
+            }else{
+                return "f";
+            }
+        } catch (Exception e) {
+            System.out.println("회원정보가 일치하지않습니다.");
             return "fail";
         }
     }
@@ -80,5 +88,17 @@ public class Controller {
     }
     public void delete(String id){
         customerDao.deleteCustomer(id);
+    }
+    public String change(String id, String pw ,String newPw){
+        changeService changeService = context.getBean("change",changeService.class);
+        if(!pw.equals(customerDao.selectCustomer(id).getPw())) {
+            System.out.println("비밀번호가 일치하지 않습니다.");
+            return "fail";
+        }else {
+            changeService.change(id, newPw);
+            System.out.println("변경완료했습니다.");
+            System.out.println("다시 로그인 해주세요.");
+            return "success";
+        }
     }
 }
