@@ -10,19 +10,22 @@ public class Controller {
     CustomerDao customerDao;
     depositService depositService;
     withdrawMoney withdrawMoney;
+    infoService infoService;
+    deleteService deleteService;
 
-    public Controller(LoginService loginService, InsertService insertService, CustomerDao customerDao, depositService depositService, withdrawMoney withdrawMoney) {
+    public Controller(LoginService loginService, InsertService insertService, CustomerDao customerDao,
+                      depositService depositService, withdrawMoney withdrawMoney,infoService infoService, deleteService deleteService) {
         this.loginService = loginService;
         this.insertService = insertService;
         this.customerDao = customerDao;
         this.depositService = depositService;
         this.withdrawMoney = withdrawMoney;
+        this.infoService = infoService;
+        this.deleteService = deleteService;
     }
 
     public String login(String id, String pw) {
-        System.out.println("컨트롤러 요청중");
         LoginService loginService = (LoginService)context.getBean("loginService", LoginService.class);
-
         try {
             loginService.login(id, pw);
             return "success";
@@ -33,9 +36,7 @@ public class Controller {
     }
 
     public String insert(String id, String pw, String name, int birth) {
-        System.out.println("컨트롤러 요청중");
         InsertService insertService = (InsertService)context.getBean("insertService", InsertService.class);
-
         try {
             if (id.equals(this.customerDao.selectCustomer(id).getId())) {
                 System.out.println("중복된 아이디입니다.");
@@ -51,7 +52,6 @@ public class Controller {
 
     public String depositMoney(String id, int money) {
         depositService depositService = (depositService)context.getBean("depositService", depositService.class);
-
         try {
             depositService.deposit(id, money);
             return "success";
@@ -61,19 +61,24 @@ public class Controller {
         }
     }
 
-    public String withdrawMoney(String id, int money) {
+    public void withdrawMoney(String id, int money) {
         withdrawMoney withdrawMoney = (withdrawMoney)context.getBean("withdrawMoney", withdrawMoney.class);
-
-        try {
-            withdrawMoney.withdrawMoney(id, money);
-            return "success";
-        } catch (Exception var5) {
-            System.out.println("출금하실 금액을 입력해주세요");
-            return "fail";
+        if( withdrawMoney.withdrawMoney(id, money).equals("fail")) {
+            System.out.println("잔고보다 출금액이 많을수 없다.");
+        }else{
+            System.out.println("출금에 성공했다.");
         }
     }
 
     public void balance(String id) {
         System.out.println(this.customerDao.selectCustomer(id).getMoney());
+    }
+
+    public void information(String id){
+        infoService infoService = context.getBean("infoService", infoService.class);
+        infoService.info(id);
+    }
+    public void delete(String id){
+        customerDao.deleteCustomer(id);
     }
 }
