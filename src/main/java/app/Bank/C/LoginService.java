@@ -10,7 +10,6 @@ public class LoginService {
     }
 
     public void login(String id, String pw) {
-        System.out.println("서비스 요청");
         if (id.equals(this.customerDao.selectCustomer(id).getId()) && pw.equals(this.customerDao.selectCustomer(id).getPw())) {
             System.out.println("로그인 성공");
         }

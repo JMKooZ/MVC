@@ -12,7 +12,6 @@ public class depositService {
 
     public void deposit(String id, int money) {
         Customer customer = this.customerDao.selectCustomer(id);
-
         try {
             customer.depositMoney(money);
         } catch (NumberFormatException var5) {
