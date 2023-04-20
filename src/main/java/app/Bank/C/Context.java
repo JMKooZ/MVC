@@ -33,10 +33,17 @@ public class Context {
     public withdrawMoney withdrawMoney() {
         return new withdrawMoney(this.customerDao());
     }
-
+    @Bean
+    public infoService infoService(){
+        return new infoService(customerDao());
+    }
+    public deleteService deleteService(){
+        return new deleteService(customerDao());
+    }
     @Bean
     public Controller controller() {
-        return new Controller(this.loginService(), this.insertService(), this.customerDao(), this.depositService(), this.withdrawMoney());
+        return new Controller(this.loginService(), this.insertService(), this.customerDao(), this.depositService(), this.withdrawMoney(), infoService()
+        ,deleteService());
     }
 }
 
