@@ -42,31 +42,35 @@ public class Controller {
 
     public String login(String id, String pw) {
         LoginService loginService = (LoginService) context.getBean("loginService", LoginService.class);
-        try {
-            if (loginService.login_service(id, pw).equals("s")) {
-                loginService.login_service(id, pw);
-                return "success";
-            } else {
-                return "f";
+            try {
+                if (loginService.login_service(id, pw).equals("s")) {
+                    loginService.login_service(id, pw);
+                    return "success";
+                } else {
+                    return "f";
+                }
+            } catch (Exception e) {
+                System.out.println("회원정보가 일치하지않습니다.");
+                return "fail";
             }
-        } catch (Exception e) {
-            System.out.println("회원정보가 일치하지않습니다.");
-            return "fail";
         }
-    }
 
     public String insert(String id, String pw, String name, int birth) {
         InsertService insertService = (InsertService) context.getBean("insertService", InsertService.class);
-        try {
-            if (id.equals(this.customerDao.selectCustomer(id).getId())) {
-                System.out.println("중복된 아이디입니다.");
-                return "fail";
-            } else {
-                return null;
+        if(idPattern(id)) {
+            try {
+                if (id.equals(this.customerDao.selectCustomer(id).getId())) {
+                    System.out.println("중복된 아이디입니다.");
+                    return "fail";
+                } else {
+                    return null;
+                }
+            } catch (Exception var7) {
+                insertService.insert(id, pw, name, birth, 0);
+                return "success";
             }
-        } catch (Exception var7) {
-            insertService.insert(id, pw, name, birth, 0);
-            return "success";
+        }else{
+            return "fail";
         }
     }
 
@@ -148,9 +152,24 @@ public class Controller {
 
     public static boolean pattern(String money) {
         String reg = "^[1-9]\\d*$";
-        if (money.matches(reg)) {
+        if (money.isEmpty()) {
+            System.out.println("입금하실 금액을 입력해주세요");
+            return false;
+        } else if (money.equals("") || money.matches(reg)) {
             return true;
         } else {
+            return false;
+        }
+    }
+    public static boolean idPattern(String id){
+        String regExpId =  "^[a-zA-Z0-9-]{1,20}$";
+        if(id.isEmpty()){
+            System.out.println("아이디를 입력해주세요");
+            return false;
+        }else if(id.equals("") || id.matches(regExpId)){
+            return true;
+        }else {
+            System.out.println("아이디 형식을 맞춰주세요");
             return false;
         }
     }
