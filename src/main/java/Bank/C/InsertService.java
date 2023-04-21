@@ -1,7 +1,7 @@
-package main.java.app.Bank.C;
+package main.java.Bank.C;
 
-import main.java.app.Bank.M.Customer;
-import main.java.app.Bank.M.CustomerDao;
+import main.java.Bank.M.Customer;
+import main.java.Bank.M.CustomerDao;
 
 public class InsertService {
     CustomerDao customerDao;

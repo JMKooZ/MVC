@@ -1,8 +1,8 @@
-package main.java.app.Bank.V;
+package main.java.Bank.V;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import main.java.app.Bank.C.Controller;
+import main.java.Bank.C.Controller;
 
 public class MainView {
     boolean a;

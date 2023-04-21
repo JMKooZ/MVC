@@ -1,10 +1,9 @@
-package main.java.app.Bank.V;
+package main.java.Bank.V;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
-import main.java.app.Bank.C.Controller;
+import main.java.Bank.C.Controller;
 
 public class MenuView {
     Controller controller;
