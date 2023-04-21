@@ -1,10 +1,13 @@
 package main.java.Bank.C;
 
 import main.java.Bank.M.CustomerDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LoginService {
     CustomerDao customerDao;
-
+@Autowired
     public LoginService(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }

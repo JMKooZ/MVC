@@ -6,13 +6,15 @@ public class Customer {
     private String name;
     private int birth;
     private int money;
+    private String account;
 
-    public Customer(String id, String pw, String name, int birth, int money) {
+    public Customer(String id, String pw, String name, int birth, int money, String account) {
         this.id = id;
         this.pw = pw;
         this.name = name;
         this.birth = birth;
         this.money = money;
+        this.account = account;
     }
 
     public String getId() {
@@ -57,5 +59,8 @@ public class Customer {
 
     public void withdrawMoney(int money) {
         this.money -= money;
+    }
+    public String getAccount() {
+        return account;
     }
 }
