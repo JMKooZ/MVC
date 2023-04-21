@@ -1,7 +1,6 @@
-package main.java.app.Bank.C;
+package main.java.Bank.C;
 
-import jdk.nashorn.internal.ir.ReturnNode;
-import main.java.app.Bank.M.CustomerDao;
+import main.java.Bank.M.CustomerDao;
 
 public class LoginService {
     CustomerDao customerDao;
