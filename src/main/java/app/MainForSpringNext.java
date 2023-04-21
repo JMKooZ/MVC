@@ -11,7 +11,7 @@ public class MainForSpringNext {
     private static ApplicationContext context = null;
 
     public static void main(String[] args) throws IOException {
-        context = new GenericXmlApplicationContext("classpath:appCtxA.xml");
+        context = new GenericXmlApplicationContext("classpath:appCtxB.xml");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(true){
             System.out.println("명령어 입력하세요: ");
@@ -34,8 +34,22 @@ public class MainForSpringNext {
                 //2. 기능을 확장해 보세요.
                 processVersionCommand();
                 continue;
+            } else if (command.startsWith("remove ")){
+                processRemoveCommand(command.split(" "));
+                continue;
             }
             printHelp();
+        }
+    }
+    private static void processRemoveCommand(String[] arg){
+        if(arg.length != 3 ) {printHelp(); return;}
+        MemberRemoveService memberRemoveService = context.getBean("removeSvc", MemberRemoveService.class);
+        try {
+            memberRemoveService.remove(arg[1],arg[2]);
+        }catch (WrongPasswordException e){
+            System.out.println("패스워드가 일치 하지 않습니다");
+        }catch (MemberNotFoundException e){
+            System.out.println("회원정보가 존재하지 않습니다.");
         }
     }
     private static void processVersionCommand() {
