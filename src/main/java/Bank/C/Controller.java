@@ -1,8 +1,11 @@
 package main.java.Bank.C;
 
 import main.java.Bank.M.CustomerDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Controller {
     public static AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Context.class);
     LoginService loginService;
@@ -13,7 +16,7 @@ public class Controller {
     infoService infoService;
     deleteService deleteService;
     changeService changeService;
-
+@Autowired
     public Controller(LoginService loginService, InsertService insertService, CustomerDao customerDao,
                       depositService depositService, withdrawMoney withdrawMoney,infoService infoService, deleteService deleteService,
                       changeService changeService) {
