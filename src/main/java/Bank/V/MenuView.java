@@ -61,8 +61,10 @@ public class MenuView {
                     System.out.print("송금 하실 분의 계좌번호를 입력해주세요");
                     String account = sc.readLine();
                     controller.accountTrans(id,account);
+                    break;
                 default:
                     System.out.println("메뉴를 확인해주세요");
+                    break;
             }
         }
     }
