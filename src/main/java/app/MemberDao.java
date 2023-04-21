@@ -23,4 +23,7 @@ public class MemberDao {
     public Collection<Member> selectAll(){
         return map.values();
     }
+    public void remove(String id){
+        map.remove(id);
+    }
 }

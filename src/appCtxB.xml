@@ -4,7 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd">
 <context:annotation-config/>
-    <import resource="appCtxB.xml"/>
+    <import resource="appCtxA.xml"/>
     <bean id="memberRegSvc" class="main.java.app.MemberRegisterService">
         <constructor-arg ref="memberDao"/>
     </bean>
@@ -13,9 +13,9 @@
     </bean>
     <bean id="listPrinter" class="main.java.app.MemberListService">
         <constructor-arg ref="memberDao"/>
-        <constructor-arg ref="listPrinter"/>
+        <constructor-arg ref="printer"/>
     </bean>
-    <bean id="remove" class="main.java.app.MemberRemoveService"/>
+    <bean id="removeSvc" class="main.java.app.MemberRemoveService"/>
     <bean id="versionPrinter" class="main.java.app.VersionPrinter">
     <property name="majorVersion"  value="5"/>
     <property name="minorVersion"  value="0"/>
