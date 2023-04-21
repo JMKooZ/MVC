@@ -5,6 +5,8 @@ import main.java.Bank.M.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 @Component
 public class InsertService {
     CustomerDao customerDao;
@@ -14,7 +16,9 @@ public class InsertService {
     }
 
     public void insert(String id, String pw, String name, int birth, int money) {
-        Customer customer = new Customer(id, pw, name, birth, 0);
+        Random r = new Random();
+        String account = String.valueOf(r.nextInt(100));
+        Customer customer = new Customer(id, pw, name, birth, 0,account);
         this.customerDao.insertCustomer(id, customer);
         System.out.println("회원가입 성공");
     }

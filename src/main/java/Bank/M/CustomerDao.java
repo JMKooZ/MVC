@@ -15,4 +15,13 @@ public class CustomerDao {
     }
     public void deleteCustomer(String id){map.remove(id);}
     public void change(String id, Customer newCustomer){map.put(id,newCustomer);}
+    public Customer accountCustomer(String account){
+        Customer c = null;
+        for(Customer customer : map.values()){
+            if(customer.getAccount().equals(account)) {
+                c = customer;
+            }
+        }
+        return c;
+    }
 }

@@ -14,7 +14,7 @@ public class changeService {
     }
     public void change(String id, String newPw){
         Customer c = customerDao.selectCustomer(id);
-        Customer changeCustomer = new Customer(id,newPw,c.getName(),c.getBirth(),c.getMoney());
+        Customer changeCustomer = new Customer(id,newPw,c.getName(),c.getBirth(),c.getMoney(),c.getAccount());
         customerDao.change(id,changeCustomer);
     }
 }

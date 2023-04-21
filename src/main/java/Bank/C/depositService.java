@@ -13,10 +13,11 @@ public class depositService {
         this.customerDao = customerDao;
     }
 
-    public void deposit(String id, int money) {
+    public void deposit(String id, String money) {
         Customer customer = this.customerDao.selectCustomer(id);
+        int m = Integer.parseInt(money);
         try {
-            customer.depositMoney(money);
+            customer.depositMoney(m);
         } catch (NumberFormatException var5) {
             System.out.println("숫자만 입력해주세요");
         }

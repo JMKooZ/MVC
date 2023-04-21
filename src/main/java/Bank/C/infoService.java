@@ -14,6 +14,6 @@ public class infoService {
     }
     public void info(String id){
         Customer customer = customerDao.selectCustomer(id);
-        System.out.println("ID: "+customer.getId() + " PW: "+customer.getPw() + " NAME: "+customer.getName() + " BIRTH: "+customer.getBirth()+" 잔고: "+customer.getMoney());
+        System.out.println("ID: "+customer.getId() + " PW: "+customer.getPw() + " NAME: "+customer.getName() + " BIRTH: "+customer.getBirth()+" ACCOUNT: "+customer.getAccount() +" 잔고: "+customer.getMoney());
     }
 }
