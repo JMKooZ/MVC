@@ -1,4 +1,4 @@
-package main.java.Bank.V;
+package main.java.Bank.Dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +8,14 @@ import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
 @Component
-public class Datasource {
+public class Data {
     @Autowired
     public DataSource source(){
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
             dataSource.setDriverClass("com.mysql.jdbc.Driver");
-        }catch (PropertyVetoException e){
-            e.printStackTrace();
+        } catch (PropertyVetoException e) {
+            throw new RuntimeException(e);
         }
         dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/jspbookdb");
         dataSource.setUser("root");
@@ -23,4 +23,5 @@ public class Datasource {
 
         return dataSource;
     }
+
 }
