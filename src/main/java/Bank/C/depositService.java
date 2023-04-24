@@ -17,7 +17,7 @@ public class depositService {
         Customer customer = this.customerDao.selectCustomer(id);
         int m = Integer.parseInt(money);
         try {
-            customer.depositMoney(m);
+            customerDao.balance(id,customer.depositMoney(m));
         } catch (NumberFormatException var5) {
             System.out.println("숫자만 입력해주세요");
         }

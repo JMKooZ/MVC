@@ -1,5 +1,6 @@
 package main.java.Bank.C;
 
+import main.java.Bank.M.Customer;
 import main.java.Bank.M.CustomerDao;
 import main.java.Bank.V.MenuView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +112,7 @@ public class Controller {
     }
 
     public String change(String id, String pw, String newPw) {
-        changeService changeService = context.getBean("change", changeService.class);
+        changeService changeService = context.getBean("changeService", changeService.class);
         if (!pw.equals(customerDao.selectCustomer(id).getPw())) {
             System.out.println("비밀번호가 일치하지 않습니다.");
             return "fail";
@@ -134,8 +135,11 @@ public class Controller {
                     if (customerDao.selectCustomer(id).getMoney() < Integer.parseInt(money)) {
                         System.out.println("잔액이 부족합니다.");
                     } else {
-                        customerDao.selectCustomer(id).withdrawMoney(Integer.parseInt(money));
-                        customerDao.accountCustomer(account).depositMoney(Integer.parseInt(money));
+//                        customerDao.selectCustomer(id).withdrawMoney(Integer.parseInt(money));
+//                        customerDao.accountCustomer(account).depositMoney(Integer.parseInt(money));
+                        customerDao.balance(id, customerDao.selectCustomer(id).withdrawMoney(Integer.parseInt(money)));
+                        customerDao.balance(customerDao.accountCustomer(account).getId()
+                                    ,customerDao.accountCustomer(account).depositMoney(Integer.parseInt(money)));
                         System.out.println("송금에 성공했습니다.");
                     }
                 } else {
