@@ -1,6 +1,8 @@
 package main.java.app;
 
+
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class MemberRegisterService {
     private MemberDao memberDao;
@@ -10,10 +12,11 @@ public class MemberRegisterService {
 
     public Long regist(RegisterRequest req){
         Member member = memberDao.selectByEmail(req.getEmail());
+        Date date = new Date();
         if(member != null){
             throw new DuplicateMemberException(req.getEmail()+"은 중복된 이메일입니다.");
         }
-        Member newMember = new Member(req.getEmail(), req.getPassword(), req.getName(), LocalDateTime.now());
+        Member newMember = new Member(req.getEmail(), req.getPassword(), req.getName(), date);
         memberDao.insert(newMember);
         return newMember.getId();
     }

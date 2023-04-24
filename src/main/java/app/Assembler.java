@@ -1,12 +1,14 @@
 package main.java.app;
 
+import javax.sql.DataSource;
+
 public class Assembler {
     private MemberDao memberDao;
     private MemberRegisterService regSvc;
     private ChangePasswordService pwdSvc;
-
+    private DataSource dataSource;
     public Assembler() {
-        memberDao = new MemberDao();
+        memberDao = new MemberDao(dataSource);
         regSvc = new MemberRegisterService(memberDao);
         pwdSvc = new ChangePasswordService();
         pwdSvc.setMemberDao(memberDao);

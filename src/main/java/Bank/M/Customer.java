@@ -53,12 +53,12 @@ public class Customer {
         return this.money;
     }
 
-    public void depositMoney(int money) {
-        this.money += money;
+    public int depositMoney(int money) {
+        return this.money += money;
     }
 
-    public void withdrawMoney(int money) {
-        this.money -= money;
+    public int withdrawMoney(int money) {
+        return this.money -= money;
     }
     public String getAccount() {
         return account;

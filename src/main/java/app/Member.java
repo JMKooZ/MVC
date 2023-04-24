@@ -1,15 +1,16 @@
 package main.java.app;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Member {
     private Long id;
     private String email;
     private String password;
     private String name;
-    private LocalDateTime registerDateTime;
+    private Date registerDateTime;
 
-    public Member(String email, String password, String name, LocalDateTime regDateTime) {
+    public Member(String email, String password, String name, Date regDateTime) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -48,11 +49,11 @@ public class Member {
         this.name = name;
     }
 
-    public LocalDateTime getRegisterDateTime() {
+    public Date getRegisterDateTime() {
         return registerDateTime;
     }
 
-    public void setRegisterDateTime(LocalDateTime registerDateTime) {
+    public void setRegisterDateTime(Date registerDateTime) {
         this.registerDateTime = registerDateTime;
     }
 

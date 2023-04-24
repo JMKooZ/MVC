@@ -19,7 +19,7 @@ public class withdrawMoney {
         if(customerDao.selectCustomer(id).getMoney() < m){
             return "fail";
         }else{
-            customer.withdrawMoney(m);
+           customerDao.balance(id,customer.withdrawMoney(m));
             return "success";
         }
     }
