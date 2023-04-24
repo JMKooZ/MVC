@@ -23,4 +23,18 @@ public class Datasource {
 
         return dataSource;
     }
+    //    private static HikariConfig config = new HikariConfig();
+//    private static HikariDataSource hds;
+//    static {
+//        config.setJdbcUrl("jdbc:mysql://localhost:3306/jspbookdb");
+//        config.setUsername("root");
+//        config.setPassword("java");
+//        config.setDriverClassName("com.mysql.jdbc.Driver");
+//        hds = new HikariDataSource(config);
+//    }
+//    @Autowired
+//    private  Datasource(){}
+//    public static Connection getConnection() throws SQLException{
+//        return hds.getConnection();
+//    }
 }
