@@ -10,7 +10,7 @@ public class ChangePasswordService {
             throw new MemberNotFoundException();
         }
         member.changePassword(oldPwd,newPwd);
-        memberDao.update(member);
+        memberDao.update(member,newPwd);
     }
 
     public void setMemberDao(MemberDao memberDao) {

@@ -1,14 +1,32 @@
 package main.java.app;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 
 @Configuration
 public class AppCtx {
     @Bean
     public MemberDao memberDao(){
-        return new MemberDao();
+        return new MemberDao(dataSource());
     }
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        try {
+            dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        }catch (PropertyVetoException e){
+            throw new RuntimeException(e);
+        }
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/jspbookdb");
+        dataSource.setUser("root");
+        dataSource.setPassword("java");
+        return dataSource;
+    }
+
     @Bean
     public MemberRegisterService memberRegSvc(){
         return new MemberRegisterService(memberDao());
