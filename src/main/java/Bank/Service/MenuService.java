@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Component
 public class MenuService {
@@ -98,7 +100,7 @@ public class MenuService {
     }
 
     public void infoAll() {
-        ArrayList<MemberDto> list = memberDao.infoAll();
+        ArrayList<MemberDto> list = (ArrayList<MemberDto>)memberDao.infoAll();
         for(int i = 0 ; i < list.size() ; i++) {
             System.out.println("ID:\t "+ list.get(i).getId()+" PW:\t "+list.get(i).getPw()+" NAME:\t "+list.get(i).getName()
                     +" MONEY:\t "+list.get(i).getMoney() +" ACCOUNT:\t "+list.get(i).getAccount()+" CRE_ID:\t "+list.get(i).getCre_id());

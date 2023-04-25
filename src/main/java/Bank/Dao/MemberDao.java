@@ -1,195 +1,93 @@
 package main.java.Bank.Dao;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
+import java.util.List;
+
 @Component
 public class MemberDao {
-    Map<String,MemberDto> members = new HashMap<>();
     Data data;
     Connection conn;
     PreparedStatement pstmt;
     ResultSet rs;
-    public MemberDao(Data data){
+    private JdbcTemplate jdbcTemplate;
+
+    public MemberDao(Data data) {
+        this.jdbcTemplate = new JdbcTemplate(data.source());
         this.data = data;
     }
-    public MemberDto selectById(String id){
-        conn = null;
-        pstmt = null;
-        MemberDto member = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("select * from member where id = ?");
-            pstmt.setString(1,id);
-            rs = pstmt.executeQuery();
-            if(rs.next()){
-                member = new MemberDto(rs.getString(1),rs.getString(2),
-                        rs.getString(3),rs.getInt(4),rs.getString(5));
+
+    public MemberDto selectById(String id) {
+        List<MemberDto> list = jdbcTemplate.query("select * from member where id = ?", new RowMapper<MemberDto>() {
+            @Override
+            public MemberDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MemberDto member = new MemberDto(rs.getString(1), rs.getString(2), rs.getString(3)
+                        , rs.getInt(4), rs.getString(5));
+                return member;
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return member;
+        }, id);
+        return list.isEmpty() ? null : list.get(0);
     }
-    public void insert(String id, MemberDto member){
-        conn = null;
-        pstmt = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("insert into member values (?,?,?,0,?,now(),null)");
-            pstmt.setString(1,id);
-            pstmt.setString(2,member.getPw());
-            pstmt.setString(3,member.getName());
-            pstmt.setString(4,member.getAccount());
-            pstmt.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+
+    public void insert(String id, MemberDto member) {
+        jdbcTemplate.update("insert into member values (?,?,?,0,?,now(),null)"
+                , member.getId(), member.getPw(), member.getName(), member.getAccount());
     }
-    public MemberDto search(String name){
-        conn = null;
-        pstmt = null;
-        MemberDto member = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("select * from member where name = ?");
-            pstmt.setString(1,name);
-            rs = pstmt.executeQuery();
-            if(rs.next()){
-                member = new MemberDto(rs.getString(1),rs.getString(2),
-                        rs.getString(3),rs.getInt(4),rs.getString(5));
+
+    public MemberDto search(String name) {
+        List<MemberDto> list = jdbcTemplate.query("select * from member where name = ? order by name", new RowMapper<MemberDto>() {
+            @Override
+            public MemberDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MemberDto member = new MemberDto(rs.getString(1), rs.getString(2),
+                        rs.getString(3), rs.getInt(4), rs.getString(5));
+                return member;
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return member;
+        }, name);
+        return list.isEmpty() ? null : list.get(0);
     }
-    public void balance(String id, int money){
-        conn = null;
-        pstmt = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("update member set money = ? where id = ?");
-            pstmt.setInt(1,money);
-            pstmt.setString(2,id);
-            pstmt.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+
+    public void balance(String id, int money) {
+        jdbcTemplate.update("update member set money = ? where id =? ", money, id);
     }
-    public MemberDto transfer(String account){
-        conn = null;
-        pstmt = null;
-        MemberDto member = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("select * from member where account = ?");
-            pstmt.setString(1,account);
-            rs = pstmt.executeQuery();
-            if(rs.next()){
-                member = new MemberDto(rs.getString(1),rs.getString(2),
-                        rs.getString(3),rs.getInt(4),rs.getString(5));
+
+    public MemberDto transfer(String account) {
+        List<MemberDto> list = jdbcTemplate.query("select * from member where account = ?", new RowMapper<MemberDto>() {
+            @Override
+            public MemberDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MemberDto member = new MemberDto(rs.getString(1), rs.getString(2),
+                        rs.getString(3), rs.getInt(4), rs.getString(5));
+                return member;
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return member;
+        }, account);
+        return list.isEmpty() ? null : list.get(0);
     }
+
     public void changePw(String id, String newPw) {
-        conn = null;
-        pstmt = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("update member set pw = ?, change_pw =now() where id = ?");
-            pstmt.setString(1,newPw);
-            pstmt.setString(2,id);
-            pstmt.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+        jdbcTemplate.update("update member set pw = ? where id =?", newPw, id);
     }
+
     public void delete(String id) {
-        conn = null;
-        pstmt = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("delete from member where id = ?");
-            pstmt.setString(1,id);
-            pstmt.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+        jdbcTemplate.update("delete from member where id = ? ", id);
     }
-    public ArrayList<MemberDto> infoAll() {
-        conn = null;
-        pstmt = null;
-        ArrayList<MemberDto> list = new ArrayList<>();
-        MemberDto member = null;
-        try {
-            conn = data.source().getConnection();
-            pstmt = conn.prepareStatement("select * from member order by cre_id");
-            rs = pstmt.executeQuery();
-            while (rs.next()){
-                member = new MemberDto(rs.getString(1),rs.getString(2),
-                        rs.getString(3),rs.getInt(4),rs.getString(5),rs.getDate(6));
-                list.add(member);
+
+    public Collection<MemberDto> infoAll() {
+        List<MemberDto> list;
+        list = jdbcTemplate.query("select * from member", new RowMapper<MemberDto>() {
+            @Override
+            public MemberDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MemberDto member = new MemberDto(rs.getString(1), rs.getString(2),
+                        rs.getString(3), rs.getInt(4), rs.getString(5), rs.getDate(6));
+                return member;
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (pstmt != null)  pstmt.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+        });
         return list;
     }
 }
