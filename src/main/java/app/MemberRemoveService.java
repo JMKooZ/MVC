@@ -11,7 +11,7 @@ public class MemberRemoveService {
         Member member = memberDao.selectByEmail(id);
         if(member != null){
             if(member.getPassword().equals(pw)){
-                memberDao.remove(id);
+//                memberDao.remove(id);
                 System.out.println("삭제되었습니다.");
             }else {
                 throw new WrongPasswordException();
