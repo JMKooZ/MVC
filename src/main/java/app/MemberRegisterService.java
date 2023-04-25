@@ -16,7 +16,7 @@ public class MemberRegisterService {
         if(member != null){
             throw new DuplicateMemberException(req.getEmail()+"은 중복된 이메일입니다.");
         }
-        Member newMember = new Member(req.getEmail(), req.getPassword(), req.getName(), date);
+        Member newMember = new Member(0,req.getEmail(), req.getPassword(), req.getName(), date);
         memberDao.insert(newMember);
         return newMember.getId();
     }
